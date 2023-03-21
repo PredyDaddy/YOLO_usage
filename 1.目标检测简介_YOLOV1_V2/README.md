@@ -1,7 +1,3 @@
-
-
-
-
 # 1. 图像处理的四大任务
 - 分类: 对图像进行分类，知道他属于哪一类。用神经网络对图像进行特征提取，平时做训练只要把同类型的图像放在同一个文件夹下就算标记了
 - 定位: 定位出目标在图像对应的位置 ex: (x, y) 中心点  + 宽高
@@ -113,6 +109,8 @@ $\delta_{x,cell} = \delta_x - i$，$\delta_{y,cell} = \delta_y - j$ 其中，$i$
 1. 从结构可以知道前面20个是类别，后面10个是定位 + 置信度。不同的东西有不同的损失函数
 
 # 7. YOLO V2 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1fbe570d1e1047e4b2b0f85380d04164.png)
+
 - 之前写YOLOV1比较详细，是因为需要深刻理解目标检测的很多知识点
 - 同时也是为了写YOLOV2 
 ## 7.1 改进一: BN层的增加
@@ -153,6 +151,9 @@ $\delta_{x,cell} = \delta_x - i$，$\delta_{y,cell} = \delta_y - j$ 其中，$i$
 
 4. 需要注意的是，使用高分辨率的样本进行训练会增加模型的计算量和内存消耗，导致检测速度变慢。因此，在实际应用中需要根据具体的场景和要求进行权衡，选择适当的输入分辨率和模型。
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/927406fd851f487c9502c8ed1e8937ea.png)
+
+
 ## 7.6 改进三: Convolution with anchor boxes
 1. 在 YOLOv2 中，采用了 Anchor Box 来处理目标的尺度和纵横比变化。与 YOLOv1 不同的是，YOLOv2 采用了 5 个预定义的 Anchor Box，分别对应不同的尺度和纵横比。对于每个 Grid Cell，YOLOv2 都会输出 5 个预测值，分别对应 5 个 Anchor Box 的置信度和偏移量。
 
@@ -164,6 +165,8 @@ $\delta_{x,cell} = \delta_x - i$，$\delta_{y,cell} = \delta_y - j$ 其中，$i$
 
 ## 7.7 anchor box 和 bounding box 
 Anchor Box 是在训练数据集上进行聚类生成的，而 Bounding Box 是在目标检测模型中预测得到的。两者的作用和生成方式都不同。
+
+注意, 这里的bouding box不是
 
 ## 7.8 改进三: 预测偏移量(Direct location prediction)
 1. 在 YOLOv1 中，模型预测的目标框中心点总是在相应的 Grid Cell 中心，因此不能很好地适应物体在 Grid Cell 内部偏移的情况，同时也不能很好地适应不同尺度的物体。
@@ -191,7 +194,7 @@ Anchor Box 是在训练数据集上进行聚类生成的，而 Bounding Box 是�
 4. True Negative: 正确的负向预测
 - 是负样本且被检测出的数量，无法计算，在目标检测中，通常也不关注 TN
 
-Recall:
+Recall:表示被模型正确检测到的正样本占所有实际正样本的比例。在目标检测任务中，Recall 用于评估模型在检测到目标时的能力，即检测到的目标占所有实际目标的比例。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/9a6392ffe5714566af40d79e11902b37.png)
 
 
@@ -208,4 +211,4 @@ $$\text{mAP}=\frac{1}{\text{N}}\sum_{i=1}^{\text{N}}\text{AP}_i$$
 5. **PR曲线**：Precision-Recall曲线
 6. AP：PR曲线下的面积，综合考量了 recall 和 precision 的影响，反映了模型对某个类别识别的好坏。
 7. mAP：mean Average Precision, 即各类别AP的平均值，衡量的是在所有类别上的平均好坏程度。
-
+8. 
